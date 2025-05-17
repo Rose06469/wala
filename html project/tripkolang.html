@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Megumi Concert Invitation</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: 
+        linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
+        url('https://images.unsplash.com/photo-1511671782779-c97d3d27a5d4?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+      background-size: cover;
+      background-position: center;
+      font-family: 'Segoe UI', sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      text-align: center;
+      color: white;
+      overflow: hidden;
+    }
+
+    .container {
+      background: rgba(0, 0, 0, 0.8);
+      padding: 40px;
+      border-radius: 10px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+      max-width: 400px;
+      border: 1px solid #444;
+      position: relative;
+      z-index: 1;
+    }
+
+    h1 {
+      font-size: 1.8em;
+      margin-bottom: 20px;
+      color: #fff;
+      text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+    }
+
+    .btn {
+      padding: 12px 25px;
+      margin: 10px;
+      font-size: 1em;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-weight: bold;
+      letter-spacing: 1px;
+    }
+
+    .yes {
+      background-color: #fff;
+      color: #000;
+    }
+
+    .no {
+      background-color: #333;
+      color: #fff;
+      border: 1px solid #555;
+    }
+
+    .btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .ticket-img {
+      width: 100%;
+      border-radius: 5px;
+      margin: 20px 0;
+      border: 1px solid #555;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .countdown {
+      font-size: 1.3em;
+      margin: 15px 0;
+      font-weight: bold;
+      color: #fff;
+      font-family: 'Courier New', monospace;
+    }
+
+    .love-message {
+      font-size: 1.2em;
+      color: #fff;
+      animation: pulse 1.5s infinite;
+      margin-top: 15px;
+      text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+    }
+
+    .guitar-icon {
+      font-size: 2em;
+      margin-bottom: 10px;
+      display: block;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.05); opacity: 0.8; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container" id="questionBox">
+    <span class="guitar-icon">🎸</span>
+    <h1>Wanna go to Megumi's concert?</h1>
+    <button class="btn yes" onclick="showPresent()">HELL YES!</button>
+    <button class="btn no" onclick="loopQuestion()">Not a chance</button>
+  </div>
+
+  <div class="container hidden" id="presentBox">
+    <span class="guitar-icon">🎫</span>
+    <h1>Your Backstage Pass</h1>
+    <div class="countdown" id="countdown"></div>
+    <img src="C:\Users\user\Desktop\html project\megumi-concert-ticket.png" alt="Megumi Concert Ticket" class="ticket-img" />
+    <p class="love-message">I LOVE YOU! ❤️</p>
+  </div>
+
+  <!-- Confetti JS -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+  <script>
+    // Concert Date: May 24, 2025, 7:00 PM (local time)
+    const concertDate = new Date(2025, 4, 24, 19, 0, 0);
+
+    function showPresent() {
+      document.getElementById("questionBox").classList.add("hidden");
+      document.getElementById("presentBox").classList.remove("hidden");
+      
+      // Rockstar confetti!
+      confetti({
+        particleCount: 150,
+        spread: 70,
+        origin: { y: 0.6 },
+        colors: ['#ffffff', '#aaaaaa', '#555555'],
+        shapes: ['circle', 'square']
+      });
+
+      // Start countdown
+      updateCountdown();
+      setInterval(updateCountdown, 1000);
+    }
+
+    function loopQuestion() {
+      // Rockstar attitude for "No" response
+      const noBtn = document.querySelector(".no");
+      noBtn.textContent = ["Try again", "Nope", "Wrong answer", "HELL YES!"][Math.floor(Math.random() * 4)];
+      noBtn.style.transform = `translate(${Math.random() * 50 - 25}px, ${Math.random() * 50 - 25}px)`;
+    }
+
+    function updateCountdown() {
+      const now = new Date();
+      const diff = concertDate - now;
+
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+      document.getElementById("countdown").innerHTML = 
+        `COUNTDOWN:<br>${days}d ${hours}h ${minutes}m ${seconds}s`;
+    }
+  </script>
+</body>
+</html>
